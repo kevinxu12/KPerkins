@@ -12,7 +12,6 @@ Each round goes as follow. Player1 and player2 are both dealt 5 cards. Player1 g
 
 I've added a modification where if you can get more rerolls for an additional cost!
 
-
 # Video Demonstration
 Come take a look at how the game is played! I've attached a video below
 
@@ -34,14 +33,3 @@ Data Structure/Variable Usage:
 - Constants class for variables, suits, symbols, etc
 
 - Variables to keep track of highest value/second highest value to distinguish between different pair/triple/quad cases
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/kevinxu12/KPerkins/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
