@@ -1,29 +1,18 @@
 ## Welcome to GitHub Pages
 
-You can use the [editor on GitHub](https://github.com/kevinxu12/KPerkins/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+Welcome! I've made this site to demonstrate what I built for my Kleiner Perkins console game project.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+### Overview
 
-### Markdown
+I built a version of draw poker with some little twists of my own. 
+If you're curious about what draw poker is, take a look here: [Link] https://en.wikipedia.org/wiki/Draw_poker
+I added a spin where for a hefty price, you can pick a card in your hand and redraw that card!
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
 
 # Header 1
-## Header 2
-### Header 3
+Come take a look at how the game is played!
 
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+[Link](url) 
 ```
 
 For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
