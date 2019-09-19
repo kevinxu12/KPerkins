@@ -1,6 +1,6 @@
 <p align="center">
   <a>
-    <img src="https://entrepreneurship.columbia.edu/wp-content/uploads/2013/10/KPCB.png" alt="KPCB logo" width="130" height="85">
+    <img src="https://getbootstrap.com/docs/4.3/assets/brand/bootstrap-solid.svg" alt="KPCB logo" width="130" height="85">
   </a>
 </p>
 
