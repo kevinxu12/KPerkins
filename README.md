@@ -5,7 +5,7 @@ I've made this site to showcase the terminal game I made for my 2020 Kleiner Per
 ### Overview
 
 I built a version of draw poker with some little twists of my own. 
-If you're curious about what draw poker is, take a look here: [https://en.wikipedia.org/wiki/Draw_poker]
+If you're curious about what draw poker is, take a look here: [Draw Poker](https://en.wikipedia.org/wiki/Draw_poker)
 # Rules
 In short, draw poker is a two player game. The specific game I made has a 5 dollar buy in for each round and gives each player 100 dollars to start.
 Each round goes as follow. Player1 and player2 are both dealt 5 cards. Player1 goes first. Player1 gets one free reroll where he can pick cards in his hand and asked them to be redrawn. Once Player1 has chosen to use or skip this reroll option, he can choose to fold, stay, or raise his bets. This marks the end of Player1's turn. Player2's turn starts now. Player2 gets all the same options as Player1. Once both players have finished, we compare the players hands using traditional poker rules, and whoever wins wins the pot!
