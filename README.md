@@ -1,21 +1,36 @@
-## Welcome to my Console Game Project.
+<p align="center">
+  <a href="https://getbootstrap.com/">
+    <img src="https://getbootstrap.com/docs/4.3/assets/brand/bootstrap-solid.svg" alt="Bootstrap logo" width="72" height="72">
+  </a>
+</p>
 
-I've made this site to showcase the terminal game I made for my 2020 Kleiner Perkins engineering fellow application.
+<h3 align="center">Draw Poker</h3>
 
-### Overview
+<p align="center">
+  My Draw Poker Console Game for the Kleiner Perkins 2020 Engineering Fellowship.
+  <br>
+  <a href="https://youtu.be/tgN11lCcYIk"><strong>Video Demonstration of My Project »</strong></a>
+  <br>
+  <br>
+</p>
 
-I built a version of draw poker with some little twists of my own. 
-If you're curious about what draw poker is, take a look here: [Draw Poker](https://en.wikipedia.org/wiki/Draw_poker)
-# Rules
+## Table of contents
+- [Overview](#overview)
+- [Rules](#rules)
+- [Design](#design)
+
+## Overview
+For my 2020 application, I built a two player poker game that can be played on the terminal! I hope you guys enjoy the game. I'm super excited to apply for the KPCB fellowship and to get a chance to join the community!
+
+## Rules
 In short, draw poker is a two player game. The specific game I made has a 5 dollar buy in for each round and gives each player 100 dollars to start.
 Each round goes as follow. Player1 and player2 are both dealt 5 cards. Player1 goes first. Player1 gets one free reroll where he can pick cards in his hand and asked them to be redrawn. Once Player1 has chosen to use or skip this reroll option, he can choose to fold, stay, or raise his bets. This marks the end of Player1's turn. Player2's turn starts now. Player2 gets all the same options as Player1. Once both players have finished, we compare the players hands using traditional poker rules, and whoever wins wins the pot!
 
 I've added a modification where if you can get more rerolls for an additional cost!
 
-# Video Demonstration
-Come take a look at how the game is played! I've attached a video below
+If you're curious about what draw poker is, take a look here: [Draw Poker](https://en.wikipedia.org/wiki/Draw_poker)
 
-# Design
+## Design
 OO Design: 
 - Class for decks. Decks can deal, shuffle, and be initialized
 - Class for cards. Cards have a print command. Can be shown or not shown
