@@ -1,0 +1,28 @@
+Design Document: 
+Rules of the Game: I built a modified version of draw poker. 
+This is a two player game, where each round has a 5 dollar buy in. Every person starts with 100 dollars.
+Draw poker occurs round by round: essentially, each player gets 5 cards. A player can reroll any number of cards. He can then fold or stay. If the 
+opponent folds or he wins, he gets the money.
+The game is modified in the sense that for an extra 10 dollars, you can pick a few of your cards you don't like and reroll by chance.
+I started this project and finished it in 3 hours 45 minutes, with some more time for this writeup.
+OO Design: 
+- Class for decks. Decks can deal, shuffle, and be initialized
+- Class for cards. Cards have a print command. Can be shown or not shown
+- Class for player. The player has his sets of cards: can see, get, replace certain ones.
+- Class for scorer. The scorer compares player cards and finds out who wins.
+- Class for game. Game keeps track of score, and runs the logic for everything.
+- Class for testing. Test the winning logic
+
+
+Data Structure Usage: 
+- Used LinkedList for deck. Because will be constantly peeking, popping, and pushing
+
+- Used Set to determine if straights: idea is if one unique suit, then we have a straight
+
+- Created a constants class for variables, suits, symbols, etc
+
+- Created two variables to represent highest value in triple/pair/quad and second highest value
+
+- In the case of a tie of highest values, compare second highest. In case of tie,
+compare third highest etc. The way I manage this is with a getHighestCard method that 
+takes a linkedlist. The linkedlist contains values that are already shown to be equal and skips them.
