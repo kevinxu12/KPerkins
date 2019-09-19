@@ -1,6 +1,6 @@
 <p align="center">
-  <a href="https://getbootstrap.com/">
-    <img src="https://getbootstrap.com/docs/4.3/assets/brand/bootstrap-solid.svg" alt="Bootstrap logo" width="72" height="72">
+  <a>
+    <img src="https://entrepreneurship.columbia.edu/wp-content/uploads/2013/10/KPCB.png" alt="KPCB logo" width="130" height="85">
   </a>
 </p>
 
