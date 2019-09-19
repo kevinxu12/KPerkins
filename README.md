@@ -5,14 +5,12 @@ Welcome! I've made this site to demonstrate what I built for my Kleiner Perkins 
 ### Overview
 
 I built a version of draw poker with some little twists of my own. 
-If you're curious about what draw poker is, take a look here: [Link] https://en.wikipedia.org/wiki/Draw_poker
+If you're curious about what draw poker is, take a look here: [https://en.wikipedia.org/wiki/Draw_poker]
 I added a spin where for a hefty price, you can pick a card in your hand and redraw that card!
 
 
 # Header 1
-Come take a look at how the game is played!
-
-[Link](url) 
+Come take a look at how the game is played! 
 ```
 
 For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
