@@ -176,7 +176,7 @@ public class Game {
 				validInput = true;
 			}
 			catch(Exception e) {
-				System.out.println("You need to format your list right");
+				System.out.println("Something went wrong");
 			}		
 		}
 	}
@@ -207,21 +207,26 @@ public class Game {
 		System.out.println("Choose what cards you want to get rid of");
 		String input = scanner.nextLine();
 		if(!input.isEmpty()) {
-			String[] inputList = input.trim().split("\\s*,\\s*");
-			ArrayList<Integer> finalIndexes = new ArrayList<>();
-			for(String str : inputList) {
-				int index = Integer.parseInt(str);
-				if(index >= 1 && index < 6) {
-					finalIndexes.add(index - 1);
+			try {
+				String[] inputList = input.trim().split("\\s*,\\s*");
+				ArrayList<Integer> finalIndexes = new ArrayList<>();
+				for(String str : inputList) {
+					int index = Integer.parseInt(str);
+					if(index >= 1 && index < 6) {
+						finalIndexes.add(index - 1);
+					}
+				}		
+			
+				for(int index : finalIndexes) {
+					if(deck.isEmpty()) {
+						end = true;
+						break;
+					}
+					player.replaceCard(index, deck.deal());
 				}
-			}		
-		
-			for(int index : finalIndexes) {
-				if(deck.isEmpty()) {
-					end = true;
-					break;
-				}
-				player.replaceCard(index, deck.deal());
+			} 
+			catch (Exception e) {
+				System.out.println("Input wrong. Free reroll used");
 			}
 		}
 		player.showCards();	

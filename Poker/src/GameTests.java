@@ -5,7 +5,7 @@ import java.util.LinkedList;
 
 import org.junit.Test;
 
-public class Tset {
+public class GameTests {
 	@Test
 	public void testPair() {
 		
@@ -167,6 +167,29 @@ public class Tset {
 		PlayerScorer scorer = new PlayerScorer(cards);
 		PlayerScorer scorer2 = new PlayerScorer(cards2);
 		assertTrue(scorer.beats(scorer2));
+	}
+	
+	@Test
+	public void compareTriplesThanPairs() {
+		LinkedList<Card> cards = new LinkedList<>();
+		cards.add(new Card("One", 1, "Diamonds"));
+		cards.add(new Card("One", 1, "Clubs"));
+		cards.add(new Card("One", 1, "Spades"));
+		cards.add(new Card("Two", 2, "Spades"));
+		cards.add(new Card("Two", 2, "Clubs"));
+		
+		
+		LinkedList<Card> cards2 = new LinkedList<>();
+		cards2.add(new Card("One", 1, "Diamonds"));
+		cards2.add(new Card("One", 1, "Clubs"));
+		cards2.add(new Card("One",1 , "Spades"));
+		cards2.add(new Card("Three", 3, "Spades"));
+		cards2.add(new Card("Three", 3, "Clubs"));
+		
+		
+		PlayerScorer scorer = new PlayerScorer(cards);
+		PlayerScorer scorer2 = new PlayerScorer(cards2);
+		assertFalse(scorer.beats(scorer2));
 	}
 	
 	@Test
