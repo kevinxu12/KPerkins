@@ -39,6 +39,24 @@ public class Game {
 				System.out.println("You have Indicated No! Game has ended!");
 				break;
 			}
+			if(roundCost > player1.getPoints() && roundCost > player2.getPoints()) {
+				int winner = player1.getPoints() - player2.getPoints();
+				if(winner == 0) {
+					System.out.println("neither player has enough to continue. It is a tie");
+				} else if (winner > 0) {
+					System.out.println("Neither player has enough to continue. But the winner is player 1 by " + Math.abs(winner) + "points");	
+				} else {
+					System.out.println("Neither player has enough to continue. But the winner is player 2 by " + Math.abs(winner) + " points");
+				}
+			}
+			if(roundCost > player1.getPoints()) {
+				System.out.println("Game is over. Player 2 wins! Player 1 Does not have enough points");
+				break;
+			}
+			if(roundCost > player2.getPoints()) {
+				System.out.println("Game is over. Player 1 wins! Player 2 Does not have enough points");
+				break;
+			}
 			player1.decreasePoints(roundCost);
 			player2.decreasePoints(roundCost);
 			pot = 2 * roundCost;
@@ -69,29 +87,41 @@ public class Game {
 			//TimeUnit.SECONDS.sleep(1);
 			if(input.equals("Player 1")) {
 				player1Folds = distributeAndFoldSequence(player1, scanner, deck, game, "Player 1 Draw");
-				raise(scanner, player1);
+				boolean didRaise = false;
+				if(!player1Folds) {
+					didRaise = raise(scanner, player1);
+				}
 				System.out.println();
 				System.out.println();
 				System.out.println();
 				player2Folds =  distributeAndFoldSequence(player2, scanner, deck, game, "Player 2 Draw");
-				player2Folds = !raise(scanner, player2);
+				if(!player1Folds && !player2Folds && didRaise) {
+					player2Folds = !match(scanner, player2);
+				}
 			} else {
 				player2Folds = distributeAndFoldSequence(player2, scanner, deck, game, "Player 2 Draw");
-				raise(scanner, player2);
+				boolean didRaise = false;
+				if(!player2Folds) {
+					didRaise = raise(scanner, player2);
+				}
 				System.out.println();
 				System.out.println();
 				System.out.println();
 				player1Folds = distributeAndFoldSequence(player1, scanner, deck, game, "Player 1 Draw");
-				player1Folds = !raise(scanner, player1);
+				if(!player2Folds && !player1Folds && didRaise) {
+					player1Folds = !match(scanner, player1);
+				}
 			}
 			
 				
 			//Deciding who wins and updating scores
 			if(player1Folds && !player2Folds) {
 				System.out.println("Player 1 folds. 2 Wins");
+				System.out.println("Increasing points by " + pot);
 				player2.increasePoints(pot);
 			} else if (player2Folds && !player1Folds) {
 				System.out.println("Player 2 folds. 1 Wins");
+				System.out.println("Increasing points by " + pot);
 				player1.increasePoints(pot);
 			} else if (!player1Folds && !player2Folds) {
 				System.out.println("Neither player folds. Tie breaker");
@@ -99,10 +129,12 @@ public class Game {
 				PlayerScorer newScorer2 = new PlayerScorer(player2.getCards());
 				if(newScorer1.beats(newScorer2)) {
 					System.out.println("Player 1 wins tie breaker");
+					System.out.println("Increasing points by " + pot);
 					player2.increasePoints(pot);
 					System.out.println("Player 1 now has " + player1.getPoints() + " points");
 				} else {
 					System.out.println("Player 2 wins tie breaker");
+					System.out.println("Increasing points by " + pot);
 					player2.increasePoints(pot);
 					System.out.println("Player 2 now has " + player2.getPoints() + " points");
 				}
@@ -117,40 +149,50 @@ public class Game {
 	// returns true if you decide to raise or succeed in matching
 	// returns false if you decide not to raise or decide not to match
 	private static boolean raise(Scanner scanner, Player player) {
-		if(!raised) {
-			System.out.println("want to raise?");
+		System.out.println("Want to raise? Type yes or no");
+		System.out.println();
+		String input = scanner.nextLine();
+		if(input.toLowerCase().equals("yes")) {
+			System.out.println("How much?");
 			System.out.println();
-			String input = scanner.nextLine();
-			if(input.toLowerCase().equals("yes")) {
-				System.out.println("How much?");
-				System.out.println();
+			boolean validRaise = false;
+			int amount = 0;
+			while(!validRaise) {
 				input = scanner.nextLine();
-				int amount = Integer.parseInt(input);
-				player.decreasePoints(amount);;
-				pot += amount;
-				System.out.println("Pot is now " + pot);
-				System.out.println("Your score is now " + player.getPoints());
-				raised = true;
-				raisedAmount = amount;
-				return true;
+				amount = Integer.parseInt(input);
+				if(amount > player.getPoints()) {
+					System.out.println("You don't have enough points. You currently have " + player.getPoints() + " points. Please reinput");
+				} else {
+					validRaise = true;
+				}
 			}
-			return false;
-		} else {
-			System.out.println("want to Match?");
-			System.out.println();
-			String input = scanner.nextLine();
-			if(input.toLowerCase().equals("yes")) {
-				 player.decreasePoints(raisedAmount);
-				 pot += raisedAmount;
-				 System.out.println("Pot is now " + pot);
-				 System.out.println("Your score is now " + player.getPoints());
-				 raised = false;
-				 raisedAmount = 0;
-				 return true;
-			}
-			return false;
+			player.decreasePoints(amount);
+			pot += amount;
+			System.out.println("Pot is now " + pot);
+			System.out.println("Your score is now " + player.getPoints());
+			raisedAmount = amount;
+			return true;
 		}
+		return false;
 		
+	}
+	private static boolean match(Scanner scanner, Player player) {
+		System.out.println("Want to Match? Type yes or no");
+		System.out.println();
+		String input = scanner.nextLine();
+		if(input.toLowerCase().equals("yes")) {
+			if(raisedAmount > player.getPoints()) {
+				System.out.println("You don't have enough to match the raise. The game resorts to auto folding");
+				return false;
+			}
+			 player.decreasePoints(raisedAmount);
+			 pot += raisedAmount;
+			 System.out.println("Pot is now " + pot);
+			 System.out.println("Your score is now " + player.getPoints());
+			 raisedAmount = 0;
+			 return true;
+		}
+		return false;
 	}
 	// Deals with all parts of draw poker until after your fold
 	// returns true if you folded
@@ -176,7 +218,7 @@ public class Game {
 				validInput = true;
 			}
 			catch(Exception e) {
-				System.out.println("Something went wrong");
+				System.out.println("Something went wrong. Try again");
 			}		
 		}
 	}
@@ -204,29 +246,35 @@ public class Game {
 	// Every player gets one free reroll. Pick which indexes (1-5) you want to reroll.
 	// This method executes that default reroll.
 	public void defaultReroll(Scanner scanner, Deck deck, Player player) {
-		System.out.println("Choose what cards you want to get rid of");
-		String input = scanner.nextLine();
-		if(!input.isEmpty()) {
-			try {
-				String[] inputList = input.trim().split("\\s*,\\s*");
-				ArrayList<Integer> finalIndexes = new ArrayList<>();
-				for(String str : inputList) {
-					int index = Integer.parseInt(str);
-					if(index >= 1 && index < 6) {
-						finalIndexes.add(index - 1);
+		boolean valid = false;
+		while(!valid) {
+			System.out.println("Choose what cards you want to get rid of. Press enter for none");
+			String input = scanner.nextLine();
+			if(!input.isEmpty()) {
+				try {
+					String[] inputList = input.trim().split("\\s*,\\s*");
+					ArrayList<Integer> finalIndexes = new ArrayList<>();
+					for(String str : inputList) {
+						int index = Integer.parseInt(str);
+						if(index >= 1 && index < 6) {
+							finalIndexes.add(index - 1);
+						}
+					}		
+				
+					for(int index : finalIndexes) {
+						if(deck.isEmpty()) {
+							end = true;
+							break;
+						}
+						player.replaceCard(index, deck.deal());
 					}
-				}		
-			
-				for(int index : finalIndexes) {
-					if(deck.isEmpty()) {
-						end = true;
-						break;
-					}
-					player.replaceCard(index, deck.deal());
+					valid = true;
+				} 
+				catch (Exception e) {
+					System.out.println("Input format wrong. Try again");
 				}
-			} 
-			catch (Exception e) {
-				System.out.println("Input wrong. Free reroll used");
+			} else {
+				valid = true;
 			}
 		}
 		player.showCards();	
@@ -238,7 +286,7 @@ public class Game {
 		System.out.println("Want to fold?");
 		System.out.println();
 		String input = scanner.nextLine();
-		if(input.equals("yes")) {
+		if(input.toLowerCase().equals("yes")) {
 			return true;
 		}
 		return false;
