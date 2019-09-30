@@ -34,19 +34,19 @@ If you're curious about more rules about draw poker, take a look here: [Draw Pok
 
 ## Design
 OO Design: 
-- Class for decks. Decks can deal, shuffle, and be initialized
-- Class for cards. Cards have a print command. Can be shown or not shown
-- Class for player. The player has his sets of cards: can see, get, replace certain ones.
-- Class for scorer. The scorer compares player cards and finds out who wins.
-- Class for game. Game keeps track of score, and runs the logic for everything.
-- Class for testing. Test the winning logic
+- Class for decks. The deck class keeps track of 52 cards. Decks can be shuffled. Cards can be dealt from decks. 
+- Class for cards. The card holds a certain value and is of a certain suit. The card class has a custom print method.
+- Class for player. The player has access to his money and his cards. He can make appropriate actions.
+- Class for scorer. The scorer compares the hands of the two players and outputs a winner.
+- Class for game. Game is the juice of this project, running most of the flow.
+- Class for testing. A JUnit test class to ensure that scorer is determining the correct winners.
 
 
 Data Structure/Variable Usage: 
-- LinkedList for deck. Because will be constantly peeking, popping, and pushing
+- I used a LinkedList for deck because of the constant peeking, popping, and pushing
 
-- Set to determine if straights: idea is if one unique suit, then we have a straight
+- I used a set to determine if there were straights.
 
-- Constants class for variables, suits, symbols, etc
+- I created a Constants class for common variables, suits, symbols, etc
 
-- Variables to keep track of highest value/second highest value to distinguish between different pair/triple/quad cases
+- I defined variables to keep track of highest value/second highest value to distinguish between different pair/triple/quad cases
