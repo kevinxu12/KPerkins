@@ -1,28 +1,27 @@
-Design Document: 
-Rules of the Game: I built a modified version of draw poker. 
-This is a two player game, where each round has a 5 dollar buy in. Every person starts with 100 dollars.
-Draw poker occurs round by round: essentially, each player gets 5 cards. A player can reroll any number of cards. He can then fold or stay. If the 
-opponent folds or he wins, he gets the money.
-The game is modified in the sense that for an extra 10 dollars, you can pick a few of your cards you don't like and reroll by chance.
-I started this project and finished it in 3 hours 45 minutes, with some more time for this writeup.
+The specific game has the following set of rules: 
+1. Each round has a 5 dollar buy in
+2. Each player starts off with 100 dollars
+3. Players can use rerolls. A reroll is an instance where a player can get certain cards in the hand replaced with new randomly selected cards.
+
+Each round goes as follow. Player1 and Player2 are both dealt 5 cards. Player1 goes first. Player1 can either keep his hand or use a reroll. Player1 has the option to pay for any additional rerolls. If he declines, Player1 can fold, raise, or stay. This marks the end of Player1's turn. Player2's turn starts now. Player2 gets all the same options as Player1. If Player2 does not match Player1's raise, he loses automatically. Once both players have finished, we compare the players hands using traditional poker rules, and whoever wins wins the pot!
+
+If you're curious about more rules about draw poker, take a look here: [Draw Poker](https://en.wikipedia.org/wiki/Draw_poker)
+
+## Design
 OO Design: 
-- Class for decks. Decks can deal, shuffle, and be initialized
-- Class for cards. Cards have a print command. Can be shown or not shown
-- Class for player. The player has his sets of cards: can see, get, replace certain ones.
-- Class for scorer. The scorer compares player cards and finds out who wins.
-- Class for game. Game keeps track of score, and runs the logic for everything.
-- Class for testing. Test the winning logic
+- Class for decks. The deck class keeps track of 52 cards. Decks can be shuffled. Cards can be dealt from decks. 
+- Class for cards. The card holds a certain value and is of a certain suit. The card class has a custom print method.
+- Class for player. The player has access to his money and his cards. He can make appropriate actions.
+- Class for scorer. The scorer compares the hands of the two players and outputs a winner.
+- Class for game. Game is the juice of this project, running most of the flow.
+- Class for testing. A JUnit test class to ensure that scorer is determining the correct winners.
 
 
-Data Structure Usage: 
-- Used LinkedList for deck. Because will be constantly peeking, popping, and pushing
+Data Structure/Variable Usage: 
+- I used a LinkedList for deck because of the constant peeking, popping, and pushing
 
-- Used Set to determine if straights: idea is if one unique suit, then we have a straight
+- I used a set to determine if there were straights.
 
-- Created a constants class for variables, suits, symbols, etc
+- I created a Constants class for common variables, suits, symbols, etc
 
-- Created two variables to represent highest value in triple/pair/quad and second highest value
-
-- In the case of a tie of highest values, compare second highest. In case of tie,
-compare third highest etc. The way I manage this is with a getHighestCard method that 
-takes a linkedlist. The linkedlist contains values that are already shown to be equal and skips them.
+- I defined variables to keep track of highest value/second highest value to distinguish between different pair/triple/quad cases
