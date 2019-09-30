@@ -9,7 +9,7 @@
 <p align="center">
   My Draw Poker Console Game for the Kleiner Perkins 2020 Engineering Fellowship.
   <br>
-  <a href="https://youtu.be/tgN11lCcYIk"><strong>Video Demonstration of My Project »</strong></a>
+  <a href="https://youtu.be/1-3oso1MPsc"><strong>Video Demonstration of My Project »</strong></a>
   <br>
   <br>
 </p>
