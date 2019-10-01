@@ -16,11 +16,15 @@
 
 ## Table of contents
 - [Overview](#overview)
+- [Instructions](#instructions)
 - [Rules](#rules)
 - [Design](#design)
 
 ## Overview
 For my 2020 application, I built a two player poker game that can be played on the terminal! I hope you guys enjoy the game. I'm super excited to apply for the KPCB fellowship and to get a chance to join the community!
+
+## Instructions 
+To run, navigate to the Poker/Game.java file and run Game.java
 
 ## Rules
 The specific game has the following set of rules: 
