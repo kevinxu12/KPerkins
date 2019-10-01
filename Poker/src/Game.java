@@ -33,10 +33,22 @@ public class Game {
 		while(!end) {
 			//Welcome messages
 			System.out.println("Welcome to a new round. The entry cost is 5 dollars");
-			System.out.println("Do you want to keep playing. Type Yes to continue, No to stop");
-			String input = scanner.nextLine();
-			if(input.toLowerCase().equals("no")) {
-				System.out.println("You have Indicated No! Game has ended!");
+			boolean isValidInput = false;
+			String input = "";
+			while(!isValidInput) {
+				System.out.println("Do you want to keep playing. Type Yes to continue, No to stop");
+				input = scanner.nextLine().trim();
+				if(input.toLowerCase().equals("no")) {
+					System.out.println("You have Indicated No! Game has ended!");
+					isValidInput = true;
+					end = true;
+				} else if (!input.toLowerCase().equals("no") && !input.toLowerCase().equals("yes")) {
+					System.out.println("Input not valid. Try again");
+				} else {
+					isValidInput = true;
+				}
+			}
+			if(end) {
 				break;
 			}
 			if(roundCost > player1.getPoints() && roundCost > player2.getPoints()) {
@@ -48,12 +60,10 @@ public class Game {
 				} else {
 					System.out.println("Neither player has enough to continue. But the winner is player 2 by " + Math.abs(winner) + " points");
 				}
-			}
-			if(roundCost > player1.getPoints()) {
+			} else if(roundCost > player1.getPoints()) {
 				System.out.println("Game is over. Player 2 wins! Player 1 Does not have enough points");
 				break;
-			}
-			if(roundCost > player2.getPoints()) {
+			} else if(roundCost > player2.getPoints()) {
 				System.out.println("Game is over. Player 1 wins! Player 2 Does not have enough points");
 				break;
 			}
@@ -79,37 +89,43 @@ public class Game {
 				player2.addCard(deck.deal(), true);
 			}
 			
-			
-			System.out.println("Choose who goes first now! Type either 'Player 1' or 'Player 2");
-			input = scanner.nextLine();
 			boolean player1Folds = false;
 			boolean player2Folds = false;
+			isValidInput = false;
 			//TimeUnit.SECONDS.sleep(1);
-			if(input.equals("Player 1")) {
-				player1Folds = distributeAndFoldSequence(player1, scanner, deck, game, "Player 1 Draw");
-				boolean didRaise = false;
-				if(!player1Folds) {
-					didRaise = raise(scanner, player1);
-				}
-				System.out.println();
-				System.out.println();
-				System.out.println();
-				player2Folds =  distributeAndFoldSequence(player2, scanner, deck, game, "Player 2 Draw");
-				if(!player1Folds && !player2Folds && didRaise) {
-					player2Folds = !match(scanner, player2);
-				}
-			} else {
-				player2Folds = distributeAndFoldSequence(player2, scanner, deck, game, "Player 2 Draw");
-				boolean didRaise = false;
-				if(!player2Folds) {
-					didRaise = raise(scanner, player2);
-				}
-				System.out.println();
-				System.out.println();
-				System.out.println();
-				player1Folds = distributeAndFoldSequence(player1, scanner, deck, game, "Player 1 Draw");
-				if(!player2Folds && !player1Folds && didRaise) {
-					player1Folds = !match(scanner, player1);
+			while(!isValidInput) {
+				System.out.println("Choose who goes first now! Type either 'Player 1' or 'Player 2");
+				input = scanner.nextLine();
+				if(input.equals("Player 1")) {
+					player1Folds = distributeAndFoldSequence(player1, scanner, deck, game, "Player 1 Draw");
+					boolean didRaise = false;
+					if(!player1Folds) {
+						didRaise = raise(scanner, player1);
+					}
+					System.out.println();
+					System.out.println();
+					System.out.println();
+					player2Folds =  distributeAndFoldSequence(player2, scanner, deck, game, "Player 2 Draw");
+					if(!player1Folds && !player2Folds && didRaise) {
+						player2Folds = !match(scanner, player2);
+					}
+					isValidInput = true;
+				} else if(input.equals("Player 2")){
+					player2Folds = distributeAndFoldSequence(player2, scanner, deck, game, "Player 2 Draw");
+					boolean didRaise = false;
+					if(!player2Folds) {
+						didRaise = raise(scanner, player2);
+					}
+					System.out.println();
+					System.out.println();
+					System.out.println();
+					player1Folds = distributeAndFoldSequence(player1, scanner, deck, game, "Player 1 Draw");
+					if(!player2Folds && !player1Folds && didRaise) {
+						player1Folds = !match(scanner, player1);
+					}
+					isValidInput = true;
+				} else {
+					System.out.println("Wrong input format. Try again");
 				}
 			}
 			
@@ -149,48 +165,62 @@ public class Game {
 	// returns true if you decide to raise or succeed in matching
 	// returns false if you decide not to raise or decide not to match
 	private static boolean raise(Scanner scanner, Player player) {
-		System.out.println("Want to raise? Type yes or no");
-		System.out.println();
-		String input = scanner.nextLine();
-		if(input.toLowerCase().equals("yes")) {
-			System.out.println("How much?");
+		boolean isValid = false;
+		while(!isValid) {
+			System.out.println("Want to raise? Type yes or no");
 			System.out.println();
-			boolean validRaise = false;
-			int amount = 0;
-			while(!validRaise) {
-				input = scanner.nextLine();
-				amount = Integer.parseInt(input);
-				if(amount > player.getPoints()) {
-					System.out.println("You don't have enough points. You currently have " + player.getPoints() + " points. Please reinput");
-				} else {
-					validRaise = true;
+			String input = scanner.nextLine().toLowerCase().trim();
+			if(input.equals("yes")) {
+				System.out.println("How much?");
+				System.out.println();
+				boolean validRaise = false;
+				int amount = 0;
+				while(!validRaise) {
+					input = scanner.nextLine();
+					amount = Integer.parseInt(input);
+					if(amount > player.getPoints()) {
+						System.out.println("You don't have enough points. You currently have " + player.getPoints() + " points. Please reinput");
+					} else {
+						validRaise = true;
+					}
 				}
+				player.decreasePoints(amount);
+				pot += amount;
+				System.out.println("Pot is now " + pot);
+				System.out.println("Your score is now " + player.getPoints());
+				raisedAmount = amount;
+				return true;
+			} else if (input.equals("no")) {
+				return false;
+			} else {
+				System.out.println("Wrong input format. Try again");
 			}
-			player.decreasePoints(amount);
-			pot += amount;
-			System.out.println("Pot is now " + pot);
-			System.out.println("Your score is now " + player.getPoints());
-			raisedAmount = amount;
-			return true;
 		}
 		return false;
 		
 	}
 	private static boolean match(Scanner scanner, Player player) {
-		System.out.println("Want to Match? Type yes or no");
-		System.out.println();
-		String input = scanner.nextLine();
-		if(input.toLowerCase().equals("yes")) {
-			if(raisedAmount > player.getPoints()) {
-				System.out.println("You don't have enough to match the raise. The game resorts to auto folding");
+		boolean isValid = false;
+		while(!isValid) {
+			System.out.println("Want to Match? Type yes or no");
+			System.out.println();
+			String input = scanner.nextLine().toLowerCase().trim();
+			if(input.equals("yes")) {
+				if(raisedAmount > player.getPoints()) {
+					System.out.println("You don't have enough to match the raise. The game resorts to auto folding");
+					return false;
+				}
+				 player.decreasePoints(raisedAmount);
+				 pot += raisedAmount;
+				 System.out.println("Pot is now " + pot);
+				 System.out.println("Your score is now " + player.getPoints());
+				 raisedAmount = 0;
+				 return true;
+			} else if (input.equals("no")) {
 				return false;
+			} else {
+				System.out.println("Wrong input format. Try again");
 			}
-			 player.decreasePoints(raisedAmount);
-			 pot += raisedAmount;
-			 System.out.println("Pot is now " + pot);
-			 System.out.println("Your score is now " + player.getPoints());
-			 raisedAmount = 0;
-			 return true;
 		}
 		return false;
 	}
@@ -227,8 +257,8 @@ public class Game {
 		boolean continueReroll = true;
 		while(continueReroll) {
 			System.out.println("Want to Reroll again for 10 bucks? Yes or No");
-			String input = scanner.nextLine();
-			if(input.toLowerCase().equals("yes")) {
+			String input = scanner.nextLine().toLowerCase().trim();
+			if(input.equals("yes")) {
 				if(player.getPoints() >= 10) {
 					player.decreasePoints(10);
 					System.out.println("Your new score is: " + player.getPoints());
@@ -238,8 +268,10 @@ public class Game {
 					System.out.println("You don't have enough money");
 					continueReroll = false;
 				}
-			} else {
+			} else if (input.equals("no")){
 				continueReroll = false;
+			} else {
+				System.out.println("Wrong input format. Try again");
 			}
 		}
 	}
@@ -283,11 +315,18 @@ public class Game {
 	// returns true if you folded
 	// returns false otherwise
 	public boolean askFold(Player p1, Scanner scanner) {
-		System.out.println("Want to fold?");
-		System.out.println();
-		String input = scanner.nextLine();
-		if(input.toLowerCase().equals("yes")) {
-			return true;
+		boolean isValid = false;
+		while(!isValid) {
+			System.out.println("Want to fold?");
+			System.out.println();
+			String input = scanner.nextLine().toLowerCase().trim();
+			if(input.equals("yes")) {
+				return true;
+			} else if(input.equals("no")) {
+				return false;
+			} else {
+				System.out.println("Wrong input format. Try again");
+			}
 		}
 		return false;
 	}
